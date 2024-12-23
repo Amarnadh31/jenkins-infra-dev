@@ -1,0 +1,37 @@
+pipeline {
+    agent{
+        label 'AGENT-1'
+    }
+    options{
+        disableConcurrentBuilds()
+        timeout(time: 30, unit: 'MINUTES')
+
+    }
+
+    parameters{
+        choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'select action')
+    }
+    stages{
+        stage('init stage'){
+            steps{
+                withAWS(region: 'us-east-1', credentials: 'aws-creds'){
+                    sh 'terraform init -reconfigure'
+
+                }
+            }
+        }
+        stage('plan and apply')
+    }
+    post{
+        always{
+            echo 'This section always run'
+            deleteDir()
+        }
+        failure{
+            echo " Build failed"
+        }
+        success{
+            echo "Build run successfully"
+        }
+    }
+}

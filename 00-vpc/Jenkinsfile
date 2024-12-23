@@ -53,7 +53,7 @@ pipeline {
                         then
                             terraform destroy -auto-approve
                         fi
-                        """
+                    """
                 }
 
             }

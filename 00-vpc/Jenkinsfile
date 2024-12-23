@@ -43,15 +43,17 @@ pipeline {
                 ok "Yes, we should."
             }
             steps{
-                sh """
-                    cd 00-vpc
-                    if [${params.ACTION} == 'apply']
-                    then
-                        terraform apply -auto-approve tfplan
-                    elif if [${params.ACTION} == 'destroy']
-                    then
-                        terraform destroy -auto-approve
-                    """
+                withAWS(region: 'us-east-1', credentials: 'aws-creds'){
+                    sh """
+                        cd 00-vpc
+                        if [${params.ACTION} == 'apply']
+                        then
+                            terraform apply -auto-approve tfplan
+                        elif if [${params.ACTION} == 'destroy']
+                        then
+                            terraform destroy -auto-approve
+                        """
+                }
 
             }
 

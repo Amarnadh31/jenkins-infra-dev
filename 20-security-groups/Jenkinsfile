@@ -1,0 +1,64 @@
+pipeline {
+    agent {
+        label 'AGENT-1'
+    }
+    options{
+        disableConcurrentBuilds()
+        timeout( time: 30, unit: 'MINUTES')
+        ansiColor('xterm')
+    }
+    parameters{
+        choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'select action' )
+    }
+    stages{
+        stage('init & apply'){
+            steps{
+                withAWS( region: 'us-east-1', credentials: 'aws-creds'){
+                    sh '''
+                        cd 20-security-groups
+                        terraform init
+                        terraform plan -out=tfplan
+                    '''
+                }
+
+            }
+        }
+        stage('Apply or Destroy'){
+            steps{
+                withAWS( region: 'us-east-1', credentials: 'aws-creds'){
+                    sh """
+                        cd 20-security-groups
+                        if [ "${params.ACTION}" == "apply" ];
+                        then
+                            terraform apply -auto-approve tfplan
+                        elif [ "${params.ACTION}" == "destroy" ];
+                        then
+                            terraform destroy -auto-approve
+                        fi
+                    """
+                }
+            }
+        }
+        // stage('Apply downstream'){
+        //     when {
+        //         expression{ params.ACTION == 'apply' }
+        //     }
+        //     steps{
+        //         script{
+        //             build job: '30-sebastian', parameters: [string(name:'ACTION', value:'apply')], wait:false
+        //         }
+        //     }
+        // }
+        stage('destroy upstream'){
+            when{
+                expression{ params.ACTION == 'destroy' }
+            }
+            steps{
+                script{
+                    build job: '00-vpc', parameters: [string(name:'ACTION', value:'destroy')], wait:false
+                }
+            }
+        }
+
+    }
+}

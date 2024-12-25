@@ -65,4 +65,16 @@ pipeline {
         }
 
     }
+    post{
+        always{
+            echo 'This section always run'
+            deleteDir()
+        }
+        failure{
+            echo " Build failed"
+        }
+        success{
+            echo "Build run successfully"
+        }
+    }
 }

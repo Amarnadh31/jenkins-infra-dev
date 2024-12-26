@@ -94,6 +94,7 @@ pipeline {
                 }
 
             }
+        }
 
         // stage('destroy upstream'){
         //     when{

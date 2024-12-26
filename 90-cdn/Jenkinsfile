@@ -62,34 +62,46 @@ pipeline {
 
             }
             parallel{
-                steps{
-                    script{
-                        build job: '70-ecr', parameters: [string(name:'ACTION', value:'destroy')], wait:false
+                stage('ecr'){
+                    steps{
+                        script{
+                            build job: '70-ecr', parameters: [string(name:'ACTION', value:'destroy')], wait:false
+                        }
                     }
                 }
-                steps{
-                    script{
-                        build job: '60-alb', parameters: [string(name:'ACTION', value:'destroy')], wait:false
+                stage('alb'){    
+                    steps{
+                        script{
+                            build job: '60-alb', parameters: [string(name:'ACTION', value:'destroy')], wait:false
+                        }
                     }
                 }
-                steps{
-                    script{
-                        build job: '50-acm', parameters: [string(name:'ACTION', value:'destroy')], wait:false
+                stage('acm'){
+                    steps{
+                        script{
+                            build job: '50-acm', parameters: [string(name:'ACTION', value:'destroy')], wait:false
+                        }
                     }
                 }
-                steps{
-                    script{
-                        build job: '40-eks', parameters: [string(name:'ACTION', value:'destroy')], wait:false
+                stage('eks'){
+                    steps{
+                        script{
+                            build job: '40-eks', parameters: [string(name:'ACTION', value:'destroy')], wait:false
+                        }
                     }
                 }
-                steps{
-                    script{
-                        build job: '35-rds', parameters: [string(name:'ACTION', value:'destroy')], wait:false
+                stage('rds'){
+                    steps{
+                        script{
+                            build job: '35-rds', parameters: [string(name:'ACTION', value:'destroy')], wait:false
+                        }
                     }
                 }
-                steps{
-                    script{
-                        build job: '30-sebastian', parameters: [string(name:'ACTION', value:'destroy')], wait:false
+                stage('sebastian'){
+                    steps{
+                        script{
+                            build job: '30-sebastian', parameters: [string(name:'ACTION', value:'destroy')], wait:false
+                        }
                     }
                 }
 
@@ -101,14 +113,18 @@ pipeline {
 
             }
             parallel{
-                steps{
-                    script{
-                        build job: '20-security-groups', parameters: [string(name:'ACTION', value:'destroy')], wait:false
+                stage('sg'){
+                    steps{
+                        script{
+                            build job: '20-security-groups', parameters: [string(name:'ACTION', value:'destroy')], wait:false
+                        }
                     }
                 }
-                steps{
-                    script{
-                        build job: '00-vpc', parameters: [string(name:'ACTION', value:'destroy')], wait:false
+                stage('vpc'){
+                    steps{
+                        script{
+                            build job: '00-vpc', parameters: [string(name:'ACTION', value:'destroy')], wait:false
+                        }
                     }
                 }
 

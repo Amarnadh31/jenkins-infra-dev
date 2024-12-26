@@ -48,25 +48,32 @@ pipeline {
                 expression{ params.ACTION == 'apply' }
             }
             parallel{
-                steps{
-                    script{
-                        build job: '30-sebastian', parameters: [string(name:'ACTION', value:'apply')], wait:false
+                stage('sebastan'){
+                    steps{
+                        script{
+                            build job: '30-sebastian', parameters: [string(name:'ACTION', value:'apply')], wait:false
+                        }
                     }
                 }
-                steps{
-                    script{
-                        build job: '35-rds', parameters: [string(name:'ACTION', value:'apply')], wait:false
+                stage('rds'){
+                    steps{
+                        script{
+                            build job: '35-rds', parameters: [string(name:'ACTION', value:'apply')], wait:false
+                        }
                     }
                 }
-                steps{
-                    script{
-                        build job: '40-eks', parameters: [string(name:'ACTION', value:'apply')], wait:false
+                stage('eks'){
+                    steps{
+                        script{
+                            build job: '40-eks', parameters: [string(name:'ACTION', value:'apply')], wait:false
+                        }
                     }
                 }
-                
-                steps{
-                    script{
-                        build job: '70-ecr', parameters: [string(name:'ACTION', value:'apply')], wait:false
+                stage('ecr'){
+                    steps{
+                        script{
+                            build job: '70-ecr', parameters: [string(name:'ACTION', value:'apply')], wait:false
+                        }
                     }
                 }
                 
@@ -77,19 +84,25 @@ pipeline {
                 expression{ params.ACTION == 'apply' }
             }
             parallel{
-                steps{
-                    script{
-                        build job: '50-acm', parameters: [string(name:'ACTION', value:'apply')], wait:false
+                stage('acm'){
+                    steps{
+                        script{
+                            build job: '50-acm', parameters: [string(name:'ACTION', value:'apply')], wait:false
+                        }
                     }
                 }
-                steps{
-                    script{
-                        build job: '60-alb', parameters: [string(name:'ACTION', value:'apply')], wait:false
+                stage('alb'){
+                    steps{
+                        script{
+                            build job: '60-alb', parameters: [string(name:'ACTION', value:'apply')], wait:false
+                        }
                     }
                 }
-                steps{
-                    script{
-                        build job: '90-cdn', parameters: [string(name:'ACTION', value:'apply')], wait:false
+                stage('cdn'){
+                    steps{
+                        script{
+                            build job: '90-cdn', parameters: [string(name:'ACTION', value:'apply')], wait:false
+                        }
                     }
                 }
 

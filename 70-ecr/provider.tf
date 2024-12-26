@@ -8,7 +8,7 @@ terraform {
 
     backend "s3" {
         bucket = "jenkins-infra-31"
-        key = "eks-terraforrm-vpc"
+        key = "ecr-terraforrm"
         region = "us-east-1"
         dynamodb_table = "demo_key"
     }

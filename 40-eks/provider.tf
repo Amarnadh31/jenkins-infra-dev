@@ -1,15 +1,21 @@
 terraform {
   required_providers {
-    aws = {
+    aws={
         source = "hashicorp/aws"
         version = "~> 5.7"
     }
   }
 
-  backend "s3"{
+  backend "s3" {
     bucket = "jenkins-infra-31"
-    key = "eks-terraforrm-sg"
+    key = "expense-eks"
     region = "us-east-1"
-    dynamodb_table = "demo_key"
+    dynamodb_table= "demo_key"     
+    
   }
+}
+
+provider "aws" {
+  region = "us-east-1"
+
 }

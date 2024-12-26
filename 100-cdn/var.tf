@@ -14,12 +14,7 @@ variable "common_tags" {
     }
 }
 
-variable "sg_tags" {
-    default = {}
-}
 
-variable "mysql_sg_tags" {
-    default = {
-        component = "mysql"
-    }
+variable "zone_name" {
+    default = "expensemind.online"
 }

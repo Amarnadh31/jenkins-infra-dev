@@ -14,12 +14,8 @@ variable "common_tags" {
     }
 }
 
-variable "sg_tags" {
-    default = {}
-}
-
-variable "mysql_sg_tags" {
+variable "sebastian_tags" {
     default = {
-        component = "mysql"
+        component = "sebastian"
     }
 }

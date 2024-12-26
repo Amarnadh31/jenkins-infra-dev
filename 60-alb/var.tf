@@ -14,12 +14,12 @@ variable "common_tags" {
     }
 }
 
-variable "sg_tags" {
-    default = {}
+variable "web_alb_tags" {
+    default = {
+        component = "web_alb"
+    }
 }
 
-variable "mysql_sg_tags" {
-    default = {
-        component = "mysql"
-    }
+variable "zone_name" {
+    default = "expensemind.online"
 }

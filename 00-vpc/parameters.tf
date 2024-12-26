@@ -8,7 +8,7 @@ resource "aws_ssm_parameter" "public_subnet" {
   name = "/name/public_subnet_id"
   type = "StringList"
   value = join(",", aws_subnet.public_sub[*].id)
-  # overwrite = true
+  overwrite = true
   
 }
 
@@ -17,7 +17,7 @@ resource "aws_ssm_parameter" "private_subnet" {
   name = "/name/private_subnet_id"
   type = "StringList"
   value = join(",", aws_subnet.private_sub[*].id)
-  # overwrite = true
+  overwrite = true
 }
 
 
@@ -26,7 +26,7 @@ resource "aws_ssm_parameter" "database_subnet" {
   name = "/name/database_subnet_id"
   type = "StringList"
   value = join(",", aws_subnet.public_sub[*].id)
-  # overwrite = true
+  overwrite = true
 }
 
 resource "aws_ssm_parameter" "database_group_name" {

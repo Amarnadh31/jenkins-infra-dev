@@ -28,3 +28,10 @@ resource "aws_ssm_parameter" "database_subnet" {
   value = join(",", aws_subnet.public_sub[*].id)
   # overwrite = true
 }
+
+resource "aws_ssm_parameter" "database_group_name" {
+  name  = "/name/database_group_name"
+  type  = "String"
+  value = aws_db_subnet_group.db_group.name
+}
+

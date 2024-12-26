@@ -21,3 +21,9 @@ resource "aws_ssm_parameter" "ingress_alb" {
   type  = "String"
   value = module.ingress_alb.sg_id
 }
+
+resource "aws_ssm_parameter" "mysql_sg_id" {
+  name  = "/${var.project_name}/${var.environment_name}/mysql_sg_id"
+  type  = "String"
+  value = module.mysql.sg_id
+}

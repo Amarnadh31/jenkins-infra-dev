@@ -1,5 +1,5 @@
 module "mysql" {
-    source = "../../terraform-security-group-module"
+    source = "git::https://github.com/Amarnadh31/terraform-security-group-module.git?ref=main"
     project_name = var.project_name
     sg_name = "mysql-sg"
     environment_name = var.environment_name
@@ -9,7 +9,7 @@ module "mysql" {
 }
 
 module "sebastian" {
-    source = "../../terraform-security-group-module"
+    source = "git::https://github.com/Amarnadh31/terraform-security-group-module.git?ref=main"
     project_name = var.project_name
     sg_name = "sebastian-sg"
     environment_name = var.environment_name
@@ -19,7 +19,7 @@ module "sebastian" {
 }
 
 module "node" {
-    source = "../../terraform-security-group-module"
+    source = "git::https://github.com/Amarnadh31/terraform-security-group-module.git?ref=main"
     project_name = var.project_name
     sg_name = "node-sg"
     environment_name = var.environment_name
@@ -29,7 +29,7 @@ module "node" {
 }
 
 module "eks_control_plane" {
-    source = "../../terraform-security-group-module"
+    source = "git::https://github.com/Amarnadh31/terraform-security-group-module.git?ref=main"
     project_name = var.project_name
     sg_name = "eks-control-plane-sg"
     environment_name = var.environment_name
@@ -39,7 +39,7 @@ module "eks_control_plane" {
 }
 
 module "ingress_alb" {
-    source = "../../terraform-security-group-module"
+    source = "git::https://github.com/Amarnadh31/terraform-security-group-module.git?ref=main"
     project_name = var.project_name
     sg_name = "ingress-alb-sg"
     environment_name = var.environment_name

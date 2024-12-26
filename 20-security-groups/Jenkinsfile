@@ -43,26 +43,68 @@ pipeline {
                 }
             }
         }
-        // stage('Apply downstream'){
-        //     when {
-        //         expression{ params.ACTION == 'apply' }
+        stage('Apply downstream-1'){
+            when {
+                expression{ params.ACTION == 'apply' }
+            }
+            parallel{
+                steps{
+                    script{
+                        build job: '30-sebastian', parameters: [string(name:'ACTION', value:'apply')], wait:false
+                    }
+                }
+                steps{
+                    script{
+                        build job: '35-rds', parameters: [string(name:'ACTION', value:'apply')], wait:false
+                    }
+                }
+                steps{
+                    script{
+                        build job: '40-eks', parameters: [string(name:'ACTION', value:'apply')], wait:false
+                    }
+                }
+                
+                steps{
+                    script{
+                        build job: '70-ecr', parameters: [string(name:'ACTION', value:'apply')], wait:false
+                    }
+                }
+                
+            }
+        }
+        stage('Apply downstream-2'){
+            when {
+                expression{ params.ACTION == 'apply' }
+            }
+            parallel{
+                steps{
+                    script{
+                        build job: '50-acm', parameters: [string(name:'ACTION', value:'apply')], wait:false
+                    }
+                }
+                steps{
+                    script{
+                        build job: '60-alb', parameters: [string(name:'ACTION', value:'apply')], wait:false
+                    }
+                }
+                steps{
+                    script{
+                        build job: '90-cdn', parameters: [string(name:'ACTION', value:'apply')], wait:false
+                    }
+                }
+
+            }
+
+        // stage('destroy upstream'){
+        //     when{
+        //         expression{ params.ACTION == 'destroy' }
         //     }
         //     steps{
         //         script{
-        //             build job: '30-sebastian', parameters: [string(name:'ACTION', value:'apply')], wait:false
+        //             build job: '00-vpc', parameters: [string(name:'ACTION', value:'destroy')], wait:false
         //         }
         //     }
         // }
-        stage('destroy upstream'){
-            when{
-                expression{ params.ACTION == 'destroy' }
-            }
-            steps{
-                script{
-                    build job: '00-vpc', parameters: [string(name:'ACTION', value:'destroy')], wait:false
-                }
-            }
-        }
 
     }
     post{

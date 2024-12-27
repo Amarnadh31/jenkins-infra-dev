@@ -134,7 +134,7 @@ resource "aws_security_group_rule" "mysql_node" {
 }
 
 
-resource "aws_security_group_rule" "mysql_node" {
+resource "aws_security_group_rule" "mysql_sebastian_allow" {
   type              = "ingress"
   from_port         = 3306
   to_port           = 3306

@@ -6,7 +6,7 @@ metadata:
   labels:
     project: expense
 data:
-  DB_HOST: expense-mysql
+  DB_HOST: {{ .Values.configMap.db_host }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: amarnadh31/backend:{{ .Values.deployment.containers.imageversion}}
+        image: "{{ .Values.deployment.containers.imageURI }}:{{ .Values.deployment.containers.imageversion}}"
         envFrom:
         - configMapRef:
             name: backend-config

@@ -18,6 +18,9 @@ pipeline{
         stage('version check') {
             steps{
                 script{
+                    sh '''
+                        cd backend
+                    '''
                     def packageJson = readJSON file: 'package.json'
                     appVersion = packageJson.version
                     echo "App version: ${appVersion}"
@@ -28,6 +31,7 @@ pipeline{
             steps{
                 withAWS(region: 'us-east-1', credentials: 'aws-creds'){
                     sh """
+                        cd backend
                         aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${account_id}.dkr.ecr.us-east-1.amazonaws.com
                         docker built -t ${account_id}.dkr.ecr.us-east-1.amazonaws.com/${project}/${environment}/${component}:${appVersion} .
                         docker push ${account_id}.dkr.ecr.us-east-1.amazonaws.com/${project}/${environment}/${component}:${appVersion}

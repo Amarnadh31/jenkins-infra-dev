@@ -1,4 +1,9 @@
-
+resource "aws_key_pair" "eks" {
+  key_name = "eks"
+#   public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF6xqVyunYvdxro7hU2VUQc65wGcepoGT0DcGNtEhFH5 amarn@AMAR"
+  public_key = file("eks.pub")
+  
+}
 
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
@@ -49,7 +54,7 @@ module "eks" {
         AmazonLoadBalancerPolicy = "arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess"
 
       }
-      key_name = data.aws_ssm_parameter.keypair.value
+      key_name = aws_key_pair.eks.key_name
     }
 
     # green = {
@@ -65,7 +70,7 @@ module "eks" {
     #     AmazonLoadBalancerPolicy = "arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess"
 
     #   }
-    #   key_name = data.aws_ssm_parameter.keypair.value
+    #   key_name = aws_key_pair.eks.key_name
     # }
     
   }

@@ -19,7 +19,7 @@ pipeline{
             steps{
                 sh 'cd backend'
                 script{
-                            def packageJson = readJSON file: 'package.json'
+                            def packageJson = readJSON file: 'backend/package.json'
                             appVersion = packageJson.version
                             echo "App version: ${appVersion}"
 

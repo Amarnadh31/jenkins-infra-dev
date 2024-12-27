@@ -56,17 +56,6 @@ pipeline {
             }
 
         }
-        stage('create sg'){
-            when{
-                expression{ params.ACTION == 'apply' }
-
-            }
-            steps{
-                script{
-                    build job: '20-sg', parameters: [string(name:'ACTION', value:'apply')], wait:false
-                }
-            }
-        }
     }
     post{
         always{

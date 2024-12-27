@@ -72,35 +72,35 @@ pipeline {
                 stage('alb'){    
                     steps{
                         script{
-                            build job: '60-alb', parameters: [string(name:'ACTION', value:'destroy')], wait:false
+                            build job: '60-alb', parameters: [string(name:'ACTION', value:'destroy')]
                         }
                     }
                 }
                 stage('acm'){
                     steps{
                         script{
-                            build job: '50-acm', parameters: [string(name:'ACTION', value:'destroy')], wait:false
+                            build job: '50-acm', parameters: [string(name:'ACTION', value:'destroy')]
                         }
                     }
                 }
                 stage('eks'){
                     steps{
                         script{
-                            build job: '40-eks', parameters: [string(name:'ACTION', value:'destroy')], wait:false
+                            build job: '40-eks', parameters: [string(name:'ACTION', value:'destroy')]
                         }
                     }
                 }
                 stage('rds'){
                     steps{
                         script{
-                            build job: '35-rds', parameters: [string(name:'ACTION', value:'destroy')], wait:false
+                            build job: '35-rds', parameters: [string(name:'ACTION', value:'destroy')]
                         }
                     }
                 }
                 stage('sebastian'){
                     steps{
                         script{
-                            build job: '30-sebastian', parameters: [string(name:'ACTION', value:'destroy')], wait:false
+                            build job: '30-sebastian', parameters: [string(name:'ACTION', value:'destroy')]
                         }
                     }
                 }
@@ -123,7 +123,7 @@ pipeline {
                 stage('vpc'){
                     steps{
                         script{
-                            build job: '00-vpc', parameters: [string(name:'ACTION', value:'destroy')], wait:false
+                            build job: '00-vpc', parameters: [string(name:'ACTION', value:'destroy')]
                         }
                     }
                 }

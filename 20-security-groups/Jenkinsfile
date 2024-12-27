@@ -51,7 +51,7 @@ pipeline {
                 stage('sebastan'){
                     steps{
                         script{
-                            build job: '30-sebastian', parameters: [string(name:'ACTION', value:'apply')]
+                            build job: '30-sebastian', parameters: [string(name:'ACTION', value:'apply')], wait: false
                         }
                     }
                 }
@@ -87,7 +87,7 @@ pipeline {
                 stage('acm'){
                     steps{
                         script{
-                            build job: '50-acm', parameters: [string(name:'ACTION', value:'apply')]
+                            build job: '50-acm', parameters: [string(name:'ACTION', value:'apply')], wait: false
                         }
                     }
                 }

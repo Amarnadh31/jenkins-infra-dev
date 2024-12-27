@@ -17,7 +17,6 @@ pipeline{
     stages{
         stage('version check') {
             steps{
-                sh 'cd backend'
                 script{
                             def packageJson = readJSON file: 'backend/package.json'
                             appVersion = packageJson.version

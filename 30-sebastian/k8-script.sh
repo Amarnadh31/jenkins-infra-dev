@@ -50,6 +50,10 @@ echo "Docker installed and configured successfully!"
 # sudo xfs_growfs /dev/RootVG/varVol
 # sudo xfs_growfs /dev/RootVG/rootVol
 
+#mysql
+
+dnf install mysql -y
+VALIDATE $? "mysql installation"
 
 #eksctl
 

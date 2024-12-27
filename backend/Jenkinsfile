@@ -18,12 +18,13 @@ pipeline{
         stage('version check') {
             steps{
                 script{
-                    sh '''
+                    sh """
                         cd backend
-                    '''
-                    def packageJson = readJSON file: 'package.json'
-                    appVersion = packageJson.version
-                    echo "App version: ${appVersion}"
+                        def packageJson = readJSON file: 'package.json'
+                        appVersion = packageJson.version
+                        echo "App version: ${appVersion}"
+
+                    """
                 }
             }
         }
@@ -38,6 +39,18 @@ pipeline{
                     """
                 }
             }
+        }
+    }
+    post{
+        always{
+            echo 'This section always run'
+            deleteDir()
+        }
+        failure{
+            echo " Build failed"
+        }
+        success{
+            echo "Build run successfully"
         }
     }
 }

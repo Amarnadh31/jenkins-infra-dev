@@ -81,7 +81,7 @@ resource "aws_lb_target_group" "eks_ingress" {
     healthy_threshold =2
     unhealthy_threshold = 2
     protocol = "HTTP"
-    port = 80
+    port = 8080
     path = "/"
     matcher = "200-299"
     interval = 5

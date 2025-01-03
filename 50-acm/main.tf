@@ -1,5 +1,5 @@
 resource "aws_acm_certificate" "expense" {
-  domain_name       = "*.${var.zone_name}"
+  domain_name       = "*.${var.zone_name}" #*.expensemind.online
   validation_method = "DNS"
 
   tags = merge(

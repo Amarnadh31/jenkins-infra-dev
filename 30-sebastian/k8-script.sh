@@ -45,9 +45,9 @@ echo "Docker installed and configured successfully!"
 # lsblk
 # sudo pvcreate /dev/xvdb
 # sudo vgextend RootVG /dev/xvdb
-# sudo lvextend -L +25G /dev/RootVG/varVol
-# sudo lvextend -L +24G /dev/RootVG/rootVol
-# sudo xfs_growfs /dev/RootVG/varVol
+# sudo lvextend -L +25G /dev/RootVG/homeVol
+# sudo lvextend -L +20G /dev/RootVG/rootVol
+# sudo xfs_growfs /dev/RootVG/homeVol
 # sudo xfs_growfs /dev/RootVG/rootVol
 
 

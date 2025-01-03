@@ -42,3 +42,21 @@ resource "null_resource" "k8s_scripts" {
     ]
   }
 }
+
+resource "aws_ebs_volume" "jenkins_volume" {
+  availability_zone = "us-east-1a"
+  size              = 50
+  type = "gp3"
+  throughput = 125
+  iops = 3000
+
+  tags = {
+    Name = "jenkins_vol"
+  }
+}
+
+resource "aws_volume_attachment" "ebs_att" {
+  device_name = "/dev/sdb"
+  volume_id   = aws_ebs_volume.jenkins_volume.id
+  instance_id = aws_instance.k8s.id
+}

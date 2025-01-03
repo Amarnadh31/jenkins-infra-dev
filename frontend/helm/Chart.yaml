@@ -1,0 +1,4 @@
+apiVersion: v1
+name: frontend
+version: 0.1
+description: this chart is used to deploy the frontend container 

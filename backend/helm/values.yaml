@@ -5,3 +5,5 @@ deployment:
     imageversion: IMAGE_VERSION
     imageURI: 767397679511.dkr.ecr.us-east-1.amazonaws.com/expense/dev/backend
   replicas: 2
+
+  

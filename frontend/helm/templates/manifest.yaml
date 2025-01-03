@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: expense
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  selector:
+    matchLabels:
+      project: expense
+      tier: frontend
+      env: dev
+  template:
+    metadata:
+      labels:
+        project: expense
+        tier: frontend
+        env: dev
+    spec:
+      containers:
+      - name: frontend
+        image: "{{ .Values.deployment.containers.imageURL }}:{{ .Values.deployment.containers.imageversion }}"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: expense
+spec:
+  # type: LoadBalancer
+  selector:
+    project: expense
+    tier: frontend
+    env: dev
+  ports:
+  - name: frontend
+    protocol: TCP
+    port: 80
+    targetPort: 80
+---
+apiVersion: elbv2.k8s.aws/v1beta1
+kind: TargetGroupBinding
+metadata:
+  name: frontend
+  namespace: expense
+spec:
+  serviceRef:
+    name: frontend # route traffic to the awesome-service
+    port: 80
+  targetGroupARN: arn:aws:elasticloadbalancing:us-east-1:767397679511:targetgroup/expense-dev/a8df0a67de6110bd
+  targetType: ip
+    

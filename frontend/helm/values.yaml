@@ -1,0 +1,5 @@
+deployment:
+  containers:
+    imageversion: IMAGE_VERSION
+    imageURL: 767397679511.dkr.ecr.us-east-1.amazonaws.com/expense/dev/frontend
+  replicas: 2

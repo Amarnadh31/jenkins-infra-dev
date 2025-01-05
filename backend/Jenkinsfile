@@ -32,11 +32,12 @@ pipeline{
             steps {
                     script {
                         withSonarQubeEnv('sonar-6.0') {
-                            sh "${scannerHome}/bin/sonar-scanner \
-                            -Dsonar.projectKey=backend \
-                            -Dsonar.projectName=backend \
-                            -Dsonar.exclusions=helm,Dockerfile,Jenkinsfile,schema,node_modules \
-                            -Dsonar.sources=."
+                            sh '''${scannerHome}/bin/sonar-scanner \
+                                -Dsonar.projectKey=backend \
+                                -Dsonar.projectName=backend \
+                                -Dsonar.exclusions=helm/,Dockerfile,Jenkinsfile,schema,node_modules \
+                                -Dsonar.sources=.
+                            '''
                         }
                     }
                 }

@@ -35,7 +35,7 @@ pipeline{
                             sh "${scannerHome}/bin/sonar-scanner \
                             -Dsonar.projectKey=backend \
                             -Dsonar.projectName=backend \
-                            -Dsonar.exclusions=helm,Dockerfile,jenkinsfile \
+                            -Dsonar.exclusions=helm,Dockerfile,Jenkinsfile,schema,node_modules \
                             -Dsonar.sources=."
                         }
                     }

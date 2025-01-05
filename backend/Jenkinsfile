@@ -25,6 +25,19 @@ pipeline{
                 }
             }
         }
+        stage('Code Analysis') {
+            environment {
+                scannerHome = tool 'Sonar-6.0'
+            }
+        }
+
+        steps {
+                script {
+                    withSonarQubeEnv('Sonar-6.0') {
+                        sh "${scannerHome}/bin/sonar-scanner"
+                    }
+                }
+            }
         stage('Deocker build'){
             steps{
                 withAWS(region: 'us-east-1', credentials: 'aws-creds'){

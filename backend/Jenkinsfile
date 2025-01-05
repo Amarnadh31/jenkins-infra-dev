@@ -28,6 +28,7 @@ pipeline{
         stage('Code Analysis') {
             environment {
                 scannerHome = tool 'sonar-6.0'
+                SONAR_SCANNER_OPTS = '--add-opens java.base/java.lang=ALL-UNNAMED'
             }
             steps {
                     script {

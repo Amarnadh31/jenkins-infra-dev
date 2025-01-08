@@ -1,6 +1,6 @@
 @Library('jenkins-shared-library') _
 
-def configmap = [
+def configMap = [
     project: "expense"
     component: "backend"
 ]

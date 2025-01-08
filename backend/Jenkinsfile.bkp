@@ -3,7 +3,6 @@ pipeline{
         label 'AGENT-1'
     }
     options{
-        timeout(time: 10, unit: 'MINUTES')
         disableConcurrentBuilds()
 
     }
@@ -26,24 +25,24 @@ pipeline{
                 }
             }
         }
-        // stage('Code Analysis') {
-        //     environment {
-        //         scannerHome = tool 'sonar-6.0'
-        //         SONAR_SCANNER_OPTS = '--add-opens java.base/java.lang=ALL-UNNAMED'
-        //     }
-        //     steps {
-        //         script {
-        //             withSonarQubeEnv('sonar-6.0') {
-        //                 sh '''${scannerHome}/bin/sonar-scanner \
-        //                     -Dsonar.projectKey=backend \
-        //                     -Dsonar.projectName=backend \
-        //                     -Dsonar.exclusions=helm/,Dockerfile,Jenkinsfile,schema,node_modules \
-        //                     -Dsonar.sources=.
-        //                 '''
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Code Analysis') {
+            environment {
+                scannerHome = tool 'sonar-6.0'
+                SONAR_SCANNER_OPTS = '--add-opens java.base/java.lang=ALL-UNNAMED'
+            }
+            steps {
+                script {
+                    withSonarQubeEnv('sonar-6.0') {
+                        sh '''${scannerHome}/bin/sonar-scanner \
+                            -Dsonar.projectKey=backend \
+                            -Dsonar.projectName=backend \
+                            -Dsonar.exclusions=helm/,Dockerfile,Jenkinsfile,schema,node_modules \
+                            -Dsonar.sources=.
+                        '''
+                    }
+                }
+            }
+        }
         stage('Deocker build'){
             steps{
                 withAWS(region: 'us-east-1', credentials: 'aws-creds'){
@@ -58,9 +57,13 @@ pipeline{
         }
         stage('Deploy'){
             steps{
-                script{
-                    build job: 'backend-deploy', parameters: [
-                        string(name:'version', value:"$appVersion")], wait:false
+                withAWS(region: 'us-east-1', credentials: 'aws-creds'){
+                    sh """
+                        aws eks update-kubeconfig --region ${region} --name ${project}
+                        cd backend/helm
+                        sed -i 's/IMAGE_VERSION/${appVersion}/g' values.yaml
+                        helm upgrade --install ${component} -n ${project} -f values.yaml .
+                    """
                 }
             }
         }

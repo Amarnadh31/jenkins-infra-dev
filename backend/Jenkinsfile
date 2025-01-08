@@ -7,6 +7,9 @@ pipeline{
         disableConcurrentBuilds()
 
     }
+    parameters{
+        booleanParam(name: 'deploy', defaultValue: false, description: 'Select to deploy or not')
+    }
     environment{
         appVersion = ''
         region = 'us-east-1'
@@ -57,10 +60,16 @@ pipeline{
             }
         }
         stage('Deploy'){
+            when{
+                expression { params.deploy }
+            }
             steps{
                 script{
                     build job: 'backend-deploy', parameters: [
-                        string(name:'version', value:"$appVersion")], wait:false
+                        string(name:'version', value:"$appVersion")
+                        string(name:'Environment', value:"dev")
+                        
+                    ], wait:false
                 }
             }
         }
